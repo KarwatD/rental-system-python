@@ -83,6 +83,18 @@ def item_add():
         file.write(new_item)
 
 
+# Wyświetlanie dostępnego towaru
+def aval_items():
+    with open("items.txt", "r") as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            item_id, title, item_type, availability = line.split(",")
+            if int(availability) == 1:
+                print(f"Tytuł: {title:<15} Typ: {item_type:<10}")
+
+
 # Struktura
 
 start()
@@ -100,6 +112,7 @@ while True:
         sep="\n",
     )
     decision = int(input("Wybierz akcje: "))
+    print()
 
     if decision == 1:
         user_add()
@@ -108,7 +121,7 @@ while True:
     elif decision == 3:
         item_add()
     elif decision == 4:
-        print()
+        aval_items()
     elif decision == 5:
         print()
     elif decision == 6:
