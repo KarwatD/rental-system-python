@@ -39,11 +39,48 @@ def id_gen(file_name):
 # Dodawanie użytkownika
 def user_add():
     user_id = id_gen("users.txt")
-    name = input("Podaj imie: ")
-    surname = input("Podaj nazwisko: ")
+    name = input("Podaj imie: ").lower()
+    surname = input("Podaj nazwisko: ").lower()
     new_user = f"{user_id},{name},{surname}\n"
     with open("users.txt", "a") as file:
         file.write(new_user)
+
+
+# Wyświetlanie użytkowników
+def user_list():
+    with open("users.txt", "r") as file:
+        print()
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            user_id, name, surname = line.split(",")
+            print(f"ID: {user_id:<8} Imie: {name:<12} Nazwisko: {surname:<12}")
+
+
+# Dodawanie towaru
+def item_add():
+    item_id = id_gen("items.txt")
+    title = input("Podaj tytuł: ").lower()
+    while True:
+        item_type = input("Typ towaru (FILM/GRA): ").lower()
+        if item_type == "gra" or item_type == "film":
+            break
+        else:
+            print("Podaj prawidłową wartość")
+    while True:
+        availability = input("Czy jest dostepny? (TAK/NIE): ").strip().lower()
+        if availability == "tak":
+            availability = 1
+            break
+        elif availability == "nie":
+            availability = 0
+            break
+        else:
+            print("Podaj poprawną opcje")
+    new_item = f"{item_id},{title},{item_type},{availability}\n"
+    with open("items.txt", "a") as file:
+        file.write(new_item)
 
 
 # Struktura
@@ -67,9 +104,9 @@ while True:
     if decision == 1:
         user_add()
     elif decision == 2:
-        print()
+        user_list()
     elif decision == 3:
-        print()
+        item_add()
     elif decision == 4:
         print()
     elif decision == 5:

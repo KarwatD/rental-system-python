@@ -1,1 +1,3 @@
-0001,Rambo,Film,1
+0001,rambo 2,film,1
+0002,terminator 3,gra,1
+0003,barbie,film,0
