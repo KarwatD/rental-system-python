@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+
+
 # Tworzenie / Sprawdzenie plików
 def start():
     try:
@@ -95,6 +98,31 @@ def aval_items():
                 print(f"Tytuł: {title:<15} Typ: {item_type:<10}")
 
 
+# Wypożyczanie towaru
+def rent():
+    user_id = input("Podaj ID użytkownika: ").strip().zfill(4)
+    item_id = input("Podaj ID towaru: ").strip().zfill(4)
+    time = int(input("Na ile dni wypożyczasz?: "))
+    time_now = datetime.now().strftime("%Y-%m-%d")
+    time_end = (datetime.now() + timedelta(days=time)).strftime("%Y-%m-%d")
+    new_rent = f"{user_id},{item_id},{time_now},{time_end}\n"
+    with open("rentals.txt", "a") as file:
+        file.write(new_rent)
+    all_lines = []
+    with open("items.txt", "r") as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split(",")
+            if parts[0] == item_id:
+                parts[3] = "0"
+            all_lines.append(",".join(parts) + "\n")
+    with open("items.txt", "w") as file:
+        file.writelines(all_lines)
+    print(f"Wypożyczono do: {time_end}")
+
+
 # Struktura
 
 start()
@@ -123,7 +151,7 @@ while True:
     elif decision == 4:
         aval_items()
     elif decision == 5:
-        print()
+        rent()
     elif decision == 6:
         print()
     elif decision == 7:
