@@ -154,6 +154,32 @@ def check_in():
         file.writelines(all_lines)
 
 
+# Wyświetlanie aktywnych wypożyczeń
+def active():
+    with open("rentals.txt", "r") as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            rentals = line.split(",")
+            with open("items.txt", "r") as file2:
+                for line2 in file2:
+                    line2 = line2.strip()
+                    if not line2:
+                        continue
+                    items = line2.split(",")
+                    with open("users.txt", "r") as file3:
+                        for line3 in file3:
+                            line3 = line3.strip()
+                            if not line3:
+                                continue
+                            users = line3.split(",")
+                            if users[0] == rentals[0] and items[0] == rentals[1]:
+                                print(
+                                    f"Wypożyczający: {users[1]} {users[2]} | Towar: {items[1]} | Data zwrotu: {rentals[3]}"
+                                )
+
+
 # Struktura
 
 start()
@@ -186,7 +212,7 @@ while True:
     elif decision == 6:
         check_in()
     elif decision == 7:
-        print()
+        active()
     elif decision == 8:
         break
     else:
