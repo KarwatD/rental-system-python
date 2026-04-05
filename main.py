@@ -123,6 +123,37 @@ def rent():
     print(f"Wypożyczono do: {time_end}")
 
 
+# Zwrot towaru
+def check_in():
+    user_id = input("Podaj ID użytkownika: ").strip().zfill(4)
+    item_id = input("Podaj ID towaru: ").strip().zfill(4)
+    all_lines = []
+    with open("rentals.txt", "r") as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split(",")
+            if parts[0] == user_id and parts[1] == item_id:
+                continue
+            all_lines.append(line + "\n")
+    with open("rentals.txt", "w") as file:
+        file.writelines(all_lines)
+
+    all_lines = []
+    with open("items.txt", "r") as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split(",")
+            if parts[0] == item_id:
+                parts[3] = "1"
+            all_lines.append(",".join(parts) + "\n")
+    with open("items.txt", "w") as file:
+        file.writelines(all_lines)
+
+
 # Struktura
 
 start()
@@ -153,7 +184,7 @@ while True:
     elif decision == 5:
         rent()
     elif decision == 6:
-        print()
+        check_in()
     elif decision == 7:
         print()
     elif decision == 8:

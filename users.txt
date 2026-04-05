@@ -1,2 +1,10 @@
 0001,jan,kowalski
-0002,jarek,koczewski
+0002,anna,nowak
+0003,piotr,zielinski
+0004,marta,wisniewska
+0005,lukasz,mazur
+0006,kasia,wojcik
+0007,tomek,lewandowski
+0008,ola,dabrowska
+0009,michal,kaminski
+0010,agata,zajac
