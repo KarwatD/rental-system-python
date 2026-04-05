@@ -1,7 +1,7 @@
 0001,wiedźmin 3,gra,0
-0002,interstellar,film,1
+0002,interstellar,film,0
 0003,cyberpunk 2077,gra,0
-0004,leon zawodowiec,film,1
+0004,leon zawodowiec,film,0
 0005,fifa 24,gra,1
 0006,shrek,film,1
 0007,diablo 4,gra,0

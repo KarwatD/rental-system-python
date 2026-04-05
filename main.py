@@ -23,6 +23,19 @@ def start():
             file.write("")
 
 
+# Pobieranie w INT
+def num(value):
+    while True:
+        try:
+            number = int(input(value))
+            if number < 0:
+                print("!!! Ta wartość jest ujemna !!!")
+            else:
+                return number
+        except ValueError:
+            print("!!! Niepoprawny typ danych podaj liczbe !!!")
+
+
 # Generator ID
 def id_gen(file_name):
     try:
@@ -100,9 +113,44 @@ def aval_items():
 
 # Wypożyczanie towaru
 def rent():
-    user_id = input("Podaj ID użytkownika: ").strip().zfill(4)
-    item_id = input("Podaj ID towaru: ").strip().zfill(4)
-    time = int(input("Na ile dni wypożyczasz?: "))
+    while True:
+        user_id = str(num("Podaj ID użytkownika: ")).strip().zfill(4)
+        found = False
+        with open("users.txt", "r") as file:
+            for line in file:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split(",")
+                if user_id == parts[0]:
+                    found = True
+                    break
+        if found:
+            break
+        else:
+            print("Taki użytkownik nie istnieje")
+    while True:
+        item_id = str(num("Podaj ID towaru: ")).strip().zfill(4)
+        found = False
+        exist = False
+        with open("items.txt", "r") as file:
+            for line in file:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split(",")
+                if parts[0] == item_id:
+                    if parts[3] == "1":
+                        found = True
+                    else:
+                        exist = True
+        if found:
+            break
+        elif exist:
+            print("Ten film jest niedostepny")
+        else:
+            print("Nie ma takiego towaru")
+    time = num("Na ile dni wypożyczasz?: ")
     time_now = datetime.now().strftime("%Y-%m-%d")
     time_end = (datetime.now() + timedelta(days=time)).strftime("%Y-%m-%d")
     new_rent = f"{user_id},{item_id},{time_now},{time_end}\n"
@@ -125,8 +173,23 @@ def rent():
 
 # Zwrot towaru
 def check_in():
-    user_id = input("Podaj ID użytkownika: ").strip().zfill(4)
-    item_id = input("Podaj ID towaru: ").strip().zfill(4)
+    while True:
+        user_id = str(num('Podaj ID użytkownika: '))
+        item_id = str(num('Podaj ID towaru: '))
+        rented = False
+        with open('rentals.txt', 'r') as file:
+            for line in file:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split(',')
+                if parts[0] == user_id and parts[1] ==item_id:
+                    rented = True
+                    break
+        if rented:
+            break
+        else:
+            print('Użytkownik nie wypożyczył wybranego towaru')
     all_lines = []
     with open("rentals.txt", "r") as file:
         for line in file:
@@ -139,7 +202,6 @@ def check_in():
             all_lines.append(line + "\n")
     with open("rentals.txt", "w") as file:
         file.writelines(all_lines)
-
     all_lines = []
     with open("items.txt", "r") as file:
         for line in file:
@@ -181,11 +243,11 @@ def active():
 
 
 # Struktura
-
 start()
 while True:
     print()
     print(
+        " MENU UŻYTKOWNIKA",
         "1.Dodaj użytkownika",
         "2.Wyświetl wszystkich użytkowników",
         "3.Dodaj przedmiot",
@@ -196,7 +258,7 @@ while True:
         "8.Wyjdź",
         sep="\n",
     )
-    decision = int(input("Wybierz akcje: "))
+    decision = num("Wybierz akcje: ")
     print()
 
     if decision == 1:
