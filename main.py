@@ -174,22 +174,22 @@ def rent():
 # Zwrot towaru
 def check_in():
     while True:
-        user_id = str(num('Podaj ID użytkownika: '))
-        item_id = str(num('Podaj ID towaru: '))
+        user_id = str(num("Podaj ID użytkownika: ")).zfill(4)
+        item_id = str(num("Podaj ID towaru: ")).zfill(4)
         rented = False
-        with open('rentals.txt', 'r') as file:
+        with open("rentals.txt", "r") as file:
             for line in file:
                 line = line.strip()
                 if not line:
                     continue
-                parts = line.split(',')
-                if parts[0] == user_id and parts[1] ==item_id:
+                parts = line.split(",")
+                if parts[0] == user_id and parts[1] == item_id:
                     rented = True
                     break
         if rented:
             break
         else:
-            print('Użytkownik nie wypożyczył wybranego towaru')
+            print("Użytkownik nie wypożyczył wybranego towaru")
     all_lines = []
     with open("rentals.txt", "r") as file:
         for line in file:

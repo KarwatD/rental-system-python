@@ -1,4 +1,4 @@
-0001,wiedźmin 3,gra,0
+0001,wiedźmin 3,gra,1
 0002,interstellar,film,0
 0003,cyberpunk 2077,gra,0
 0004,leon zawodowiec,film,0
